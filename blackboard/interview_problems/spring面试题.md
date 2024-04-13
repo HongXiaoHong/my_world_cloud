@@ -91,3 +91,33 @@ Spring中使用的设计模式包括：
 6. 观察者模式（Observer）：Spring Framework中的事件机制就是一个观察者模式的实现，它允许对象在状态发生变化时通知其他对象。
    
    总之，Spring Framework中的设计模式有助于实现松耦合、重复性代码的封装和提高代码的可重用性、可维护性和可扩展性等目标。
+
+## 请求
+
+### [阿里二面;SpringBoot解决跨域的5种方式,满分回答是怎样的？_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1p94y1i7iz/?spm_id_from=333.788&vd_source=eabc2c22ae7849c2c4f31815da49f209)
+
+jsonp
+
+cors
+
+nginx
+
+
+
+## 事务失效原因
+
+[面试官：Spring事务失效的场景有哪些？如何解决？ (qq.com)](https://mp.weixin.qq.com/s/Vhr07lCfGMHDzQc8eYgYkQ)
+
+1. 注解`@Transactional`配置的方法非public权限修饰；
+
+2. 注解`@Transactional`所在类非Spring容器管理的bean；
+
+3. 注解`@Transactional`所在类中，注解修饰的方法被类内部方法调用；
+
+4. 业务代码抛出异常类型非RuntimeException，事务失效；
+
+5. 业务代码中存在异常时，使用try…catch…语句块捕获，而catch语句块没有throw new RuntimeExecption异常;（最难被排查到问题且容易忽略）
+
+6. 注解`@Transactional`中Propagation属性值设置错误即Propagation.NOT_SUPPORTED（一般不会设置此种传播机制）
+
+7. mysql关系型数据库，且存储引擎是MyISAM而非InnoDB，则事务会不起作用(基本开发中不会遇到)；下面基于以上场景，溪源给小伙伴们详细解释；
